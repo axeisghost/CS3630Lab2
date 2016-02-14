@@ -4,8 +4,8 @@ adjacentList = {}
 positionList = {}
 edgeVisitedList = {}
 path = [];
-queue = [];
-with open('CS3630_Lab2_Map1.csv', 'r') as csvfile:
+stack = [];
+with open('CS3630_Lab2_Map2.csv', 'r') as csvfile:
 	myReader = csv.reader(csvfile, delimiter = ',')
 	for row in myReader:
 		if (len(row) == 3):
@@ -21,11 +21,11 @@ for node in adjacentList:
 		startNode = node
 		break
 prev = None
-queue.append((None, node))
+stack.append((None, node))
 path = []
 insertPos = 0;
-while (len(queue) != 0):
-	curr = queue.pop()
+while (len(stack) != 0):
+	curr = stack.pop()
 	visited = False
 	if edgeVisitedList.has_key(curr):
 		visited = edgeVisitedList[curr]
@@ -37,10 +37,10 @@ while (len(queue) != 0):
 		for next in adjacentList[curr[1]]:
 			if edgeVisitedList.has_key((curr[1], next)):
 				if (not edgeVisitedList[(curr[1], next)]):
-					queue.append((curr[1], next))
+					stack.append((curr[1], next))
 			else:
 				if (not edgeVisitedList[(next, curr[1])]):
-					queue.append((curr[1], next))
+					stack.append((curr[1], next))
 		if (len(path) > 0):
 			if (path[insertPos - 1] != curr[0]):
 				for pos in range(0, len(path)):
