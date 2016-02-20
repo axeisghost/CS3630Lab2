@@ -1,10 +1,10 @@
 from myro import *
 import math
-#import searchPath.py
+import searchPath
+import sys
 init("/dev/tty.Fluke2-0AC8-Fluke2")
 
-vertex = ['A', 'D', 'E', 'C', 'D', 'B', 'C', 'A', 'B']
-vertexCoor = [(0.0, 0.0), (2.0, 2.0), (1.0, 3.0), (0.0, 2.0), (2.0, 2.0), (2.0, 0.0), (0.0, 2.0), (0.0, 0.0), (2.0, 0.0)]
+vertexCoor = searchPath.findPath(sys.argv[1])
 
 
 
@@ -16,6 +16,8 @@ def move(v, _v, alpha):
     difx = _v[0] - v[0]
     dify = _v[1] - v[1]
     tmp = 0
+    print difx
+    print dify
     if difx == 0:
         if dify > 0:
             tmp = 90
@@ -27,7 +29,8 @@ def move(v, _v, alpha):
         if difx > 0:
             tmp = 0
             angle = (360 - alpha) % 360
-        else:
+        elif difx < 0:
+            tmp = 180
             angle = 180 - alpha
     else:
         angle = math.atan(dify / difx) / math.pi * 180
